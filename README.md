@@ -1,31 +1,90 @@
-# LegalGPT
+# ⚖️ LegalGPT — Legal Document Intelligence System
 
-LegalGPT is a legal document intelligence workspace with upload analysis, clause extraction, risk flagging, retrieval-based Q&A, document comparison, template generation, and report export.
+> An AI-powered legal workspace that lets users upload legal documents and interact with them through natural language — powered by RAG, Groq LLMs, and a FastAPI + React architecture.
 
-## Run
+---
 
-This workspace has a disk limit, so the runnable server uses only the Python standard library:
+## 🚀 Features
+
+- 📄 **Document Upload & Analysis** — Upload `.txt`, `.md`, PDF, or DOCX legal files for instant parsing
+- 🔍 **Clause Extraction** — Automatically identifies and surfaces key legal clauses
+- ⚠️ **Risk Flagging** — Highlights potentially risky or ambiguous contract language
+- 💬 **Retrieval-Augmented Q&A** — Ask questions about your document; get grounded, cited answers
+- 📊 **Document Comparison** — Diff two documents to surface changed or missing clauses
+- 📝 **Template Generation** — Generate standard legal document templates on demand
+- 📤 **Report Export** — Export analysis results as structured reports
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| LLM | Groq (`llama-3.1-70b-versatile`) |
+| Backend | FastAPI + Python |
+| Frontend | HTML / CSS / JavaScript (static) |
+| RAG | Retrieval-based document Q&A |
+| Server (zero-dep) | Python standard library (`server.py`) |
+
+---
+
+## 📁 Project Structure
+
+```
+LegalGPT/
+├── server.py                  # Zero-dependency runnable server (stdlib only)
+├── main.py                    # FastAPI entry point (full stack)
+├── requirements.txt           # Optional full-stack dependencies
+├── legalgpt_backend/          # FastAPI-style backend services & architecture
+├── legalgpt_frontend/         # Static UI (HTML/CSS/JS)
+├── .env.example               # Environment variable template
+└── .gitignore
+```
+
+---
+
+## ⚡ Quick Start
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/kannan05-m/LegalGPT.git
+cd LegalGPT
+```
+
+### 2. Set up environment variables
+
+```bash
+cp .env.example .env
+# Add your Groq API key to .env
+```
+
+`.env.example`:
+```
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.1-70b-versatile
+```
+
+### 3. Run (zero-dependency mode — no installs needed)
 
 ```bash
 APP_PORT=8010 python3 server.py
 ```
 
-Open:
+Open → [http://127.0.0.1:8010](http://127.0.0.1:8010)
 
-```txt
-http://127.0.0.1:8010
+### 4. Run full FastAPI stack (optional)
+
+```bash
+pip install fastapi uvicorn python-multipart pydantic
+uvicorn main:app --reload --port 8010
 ```
 
-## Run In VS Code
+---
 
-1. Open this project folder in VS Code.
-2. Open `.env.example` and copy the Groq values into your shell environment if you want live AI responses.
-3. Press `Cmd+Shift+B` and choose `Run LegalGPT`, or open the Run panel and start `Run LegalGPT`.
-4. Open `http://127.0.0.1:8010` in your browser.
+## 🤖 Groq Integration
 
-## Groq
-
-Set `GROQ_API_KEY` to enable live Groq analysis and answers:
+Set `GROQ_API_KEY` to enable live LLM-powered analysis:
 
 ```bash
 export GROQ_API_KEY=your_groq_api_key_here
@@ -33,15 +92,44 @@ export GROQ_MODEL=llama-3.1-70b-versatile
 APP_PORT=8010 python3 server.py
 ```
 
-Without `GROQ_API_KEY`, the app still runs with local heuristic analysis and retrieval-only chat responses.
+Without a Groq key, the app runs in **offline mode** — local heuristic analysis and retrieval-only responses still work, no API calls required.
 
-## Upload Support
+---
 
-The zero-dependency runner supports `.txt` and `.md` uploads. The FastAPI architecture and optional parser modules are included for PDF/DOCX support, but installing those packages exceeded this workspace's disk allowance.
+## 🖥️ VS Code Setup
 
-## Project Layout
+1. Open the project folder in VS Code
+2. Copy your Groq credentials into your shell environment (see above)
+3. Press `Cmd+Shift+B` → select **Run LegalGPT**
+4. Open [http://127.0.0.1:8010](http://127.0.0.1:8010)
 
-- `server.py` - zero-dependency runnable web/API server
-- `legalgpt_frontend/` - static app UI
-- `legalgpt_backend/` - FastAPI-style backend architecture and services
-- `outputs/legalgpt-groq-build-prompt.md` - Groq-specific build prompt
+---
+
+## 🔒 Environment & Security
+
+- Never commit your `.env` file — it's in `.gitignore`
+- Use `.env.example` as a reference template with placeholder values only
+- Get a free Groq API key at [console.groq.com](https://console.groq.com)
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] PDF and DOCX upload support (full parser integration)
+- [ ] Vector store with FAISS for semantic document retrieval
+- [ ] Multi-document RAG across a legal knowledge base
+- [ ] Jurisdiction-aware clause risk scoring
+
+---
+
+## 👤 Author
+
+**Kannan Mehra**  
+B.Tech AI & ML — ADGIPS, GGSIPU  
+[GitHub](https://github.com/kannan05-m)
+
+---
+
+## 📄 License
+
+MIT
