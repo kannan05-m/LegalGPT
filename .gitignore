@@ -1,0 +1,15 @@
+venv/
+**pycache**/
+*.pyc
+.env
+.env.save
+
+node_modules/
+dist/
+
+outputs/
+work/
+
+.DS_Store
+.vscode/
+.idea/

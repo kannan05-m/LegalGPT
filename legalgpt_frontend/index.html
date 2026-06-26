@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LegalGPT</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+<div id="app">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-mark">LG</div>
+      <div class="brand-text">
+        <h1>LegalGPT</h1>
+        <p>Document intelligence</p>
+      </div>
+    </div>
+
+    <!-- Upload -->
+    <div class="sidebar-section-label">Upload</div>
+
+    <div class="upload-area">
+      <label id="dropzone" class="dropzone" for="documentInput">
+        <input id="documentInput" type="file" accept=".pdf,.docx,.txt" />
+        <span class="upload-cloud">☁</span>
+        <p class="drop-hint">Drop your document here<br>or click to browse</p>
+        <span class="file-types-btn">PDF, DOCX, or TXT</span>
+      </label>
+
+      <button id="sampleButton" class="sidebar-link-btn">
+        <span>📄</span> Load sample contract <span class="arrow">›</span>
+      </button>
+    </div>
+
+    <!-- Document details -->
+    <div class="sidebar-section-label">Document</div>
+
+    <div class="meta-block">
+      <div class="meta-row">
+        <span class="meta-key">File</span>
+        <span id="fileName" class="meta-val">—</span>
+        <span id="fileCheck" class="meta-check hidden">✓</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Type</span>
+        <span id="docType" class="meta-val accent">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Chunks</span>
+        <span id="chunkCount" class="meta-val">—</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="sidebar-section-label">Actions</div>
+
+    <div class="actions-block">
+      <button id="exportButton" class="action-btn primary" disabled>
+        <span class="btn-icon">⬇</span> Export report
+      </button>
+      <button id="rerunButton" class="action-btn secondary" disabled>
+        <span class="btn-icon">↻</span> Re-run analysis
+      </button>
+    </div>
+
+    <div class="sidebar-footer">© 2025 LegalGPT</div>
+
+  </aside>
+
+  <!-- ── MAIN WORKSPACE ── -->
+  <main class="workspace">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2>Legal review workspace</h2>
+        <p id="statusText">Ready. Upload a legal document to begin.</p>
+      </div>
+      <div class="topbar-right">
+        <div id="providerBadge" class="badge">
+          <span class="check-icon">✓</span>
+          Groq-ready
+        </div>
+        <button class="icon-btn" title="Toggle theme">☀</button>
+      </div>
+    </header>
+
+    <div class="grid">
+
+      <!-- ── SUMMARY PANE ── -->
+      <section class="pane summary-pane">
+
+        <div class="pane-head">
+          <span class="pane-icon doc-icon">📄</span>
+          <h3>Summary</h3>
+        </div>
+
+        <p id="summaryText" class="summary-text">
+          Analysis will appear here after upload.
+        </p>
+
+        <div class="pane-head subhead">
+          <span class="pane-icon scale-icon">⚖️</span>
+          <h3>Key clauses</h3>
+        </div>
+
+        <div id="clauses" class="clause-list">
+          <p class="empty-hint">No clauses extracted yet.</p>
+        </div>
+
+        <div class="pane-head subhead">
+          <span class="pane-icon risk-icon">🛡️</span>
+          <h3>Risk flags</h3>
+        </div>
+
+        <div id="risks" class="risk-list">
+          <p class="empty-hint">No risk flags yet.</p>
+        </div>
+
+      </section>
+
+      <!-- ── DOCUMENT PANE ── -->
+      <section class="pane document-pane">
+
+        <div class="pane-head">
+          <span class="pane-icon scroll-icon">📜</span>
+          <h3>Document text</h3>
+          <div class="search-wrap">
+            <input id="documentSearch" type="search" placeholder="Search in document..." />
+            <span class="search-icon">🔍</span>
+          </div>
+        </div>
+
+        <pre id="documentText" class="document-text">Upload a document to inspect its text here.</pre>
+
+      </section>
+
+      <!-- ── CHAT / TOOLS PANE ── -->
+      <section class="pane right-pane">
+
+        <!-- Ask LegalGPT -->
+        <div class="pane-head">
+          <span class="pane-icon star-icon">✨</span>
+          <h3>Ask LegalGPT</h3>
+        </div>
+
+        <div id="chatLog" class="chat-log">
+          <div class="assistant-placeholder">
+            Ask questions like "What happens if I terminate early?" or "Are there any risky clauses?"
+          </div>
+        </div>
+
+        <div class="chat-form">
+          <input
+            id="questionInput"
+            type="text"
+            placeholder="Ask about this document..."
+            disabled
+          />
+          <button id="askButton" class="ask-btn" disabled>
+            ✈ Ask
+          </button>
+        </div>
+
+        <!-- Compare two documents -->
+        <div class="tool-section">
+          <div class="tool-head">
+            <span class="pane-icon scale-icon">⚖️</span>
+            <h4>Compare two documents</h4>
+          </div>
+          <div class="compare-form">
+            <div class="file-row">
+              <button class="file-pick-btn" onclick="document.getElementById('compareA').click()">Choose file</button>
+              <span id="compareAName" class="file-pick-label">No file chosen</span>
+              <input id="compareA" type="file" style="display:none" onchange="document.getElementById('compareAName').textContent = this.files[0]?.name || 'No file chosen'" />
+            </div>
+            <div class="file-row">
+              <button class="file-pick-btn" onclick="document.getElementById('compareB').click()">Choose file</button>
+              <span id="compareBName" class="file-pick-label">No file chosen</span>
+              <input id="compareB" type="file" style="display:none" onchange="document.getElementById('compareBName').textContent = this.files[0]?.name || 'No file chosen'" />
+            </div>
+            <button id="compareButton" class="compare-btn">⇄ Compare</button>
+            <div id="compareResult" class="tool-result hidden"></div>
+          </div>
+        </div>
+
+        <!-- Generate template -->
+        <div class="tool-section">
+          <div class="tool-head">
+            <span class="pane-icon doc-icon">📄</span>
+            <h4>Generate template</h4>
+          </div>
+          <form id="templateForm" class="template-form">
+            <input name="document_type" placeholder="Document type, e.g. NDA" />
+            <input name="party_a" placeholder="Party A" />
+            <input name="party_b" placeholder="Party B" />
+            <input name="jurisdiction" placeholder="Jurisdiction" />
+            <input name="duration" placeholder="Duration (optional)" />
+            <textarea name="terms" placeholder="Specific terms (optional)"></textarea>
+            <button type="submit" class="gen-btn">✨ Generate template</button>
+          </form>
+          <pre id="templateResult" class="tool-result hidden"></pre>
+        </div>
+
+      </section>
+
+    </div><!-- .grid -->
+
+  </main>
+
+</div><!-- #app -->
+
+<script src="/app.js"></script>
+</body>
+</html>
