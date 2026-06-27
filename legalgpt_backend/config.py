@@ -21,7 +21,7 @@ load_dotenv()
 @dataclass(frozen=True)
 class Settings:
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
-    groq_model: str = os.getenv("GROQ_MODEL", "llama-3.1-70b-versatile")
+    groq_model: str = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
     app_name: str = "LegalGPT"
     max_context_chars: int = 14000
 
