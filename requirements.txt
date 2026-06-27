@@ -1,6 +1,8 @@
-# The runnable zero-dependency server uses only the Python standard library.
-# Optional full-stack dependencies for main.py:
-# fastapi==0.115.6
-# uvicorn==0.34.0
-# python-multipart==0.0.20
-# pydantic==2.10.4
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+groq==0.11.0
+python-dotenv==1.0.1
+httpx==0.27.2
+pdfplumber==0.11.4

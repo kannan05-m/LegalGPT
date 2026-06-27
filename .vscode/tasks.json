@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run LegalGPT",
+      "type": "shell",
+      "command": "APP_PORT=8010 PYTHONPYCACHEPREFIX=/private/tmp/legalgpt_pycache python3 server.py",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}

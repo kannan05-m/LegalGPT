@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run LegalGPT",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.py",
+      "console": "integratedTerminal",
+      "env": {
+        "APP_HOST": "127.0.0.1",
+        "APP_PORT": "8010",
+        "PYTHONPYCACHEPREFIX": "/private/tmp/legalgpt_pycache"
+      }
+    }
+  ]
+}
